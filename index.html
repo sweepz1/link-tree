@@ -1,0 +1,324 @@
+
+1|<!DOCTYPE html>
+2|<html lang="en">
+3|<head>
+4|  <meta charset="UTF-8">
+5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+6|  <title>just a little fun</title>
+7|  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+8|  <style>
+9|    * {
+10|      margin: 0;
+11|      padding: 0;
+12|      box-sizing: border-box;
+13|    }
+14|
+15|    :root {
+16|      --bg: #080808;
+17|      --text: #ffffff;
+18|      --text-muted: rgba(255, 255, 255, 0.45);
+19|      --border: rgba(255, 255, 255, 0.08);
+20|      --card-bg: rgba(255, 255, 255, 0.03);
+21|    }
+22|
+23|    body {
+24|      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+25|      background: var(--bg);
+26|      color: var(--text);
+27|      -webkit-font-smoothing: antialiased;
+28|      min-height: 100vh;
+29|      overflow-x: hidden;
+30|    }
+31|
+32|    ::selection {
+33|      background: rgba(255, 255, 255, 0.15);
+34|    }
+35|
+36|    .app {
+37|      min-height: 100vh;
+38|      position: relative;
+39|    }
+40|
+41|    .bg-gradient {
+42|      position: fixed;
+43|      top: 0;
+44|      left: 0;
+45|      right: 0;
+46|      bottom: 0;
+47|      background: 
+48|        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 80, 255, 0.08), transparent),
+49|        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 100, 150, 0.05), transparent);
+50|      pointer-events: none;
+51|      z-index: 0;
+52|    }
+53|
+54|    .main {
+55|      position: relative;
+56|      z-index: 2;
+57|      max-width: 720px;
+58|      margin: 0 auto;
+59|      padding: 80px 24px;
+60|      min-height: 100vh;
+61|      display: flex;
+62|      flex-direction: column;
+63|    }
+64|
+65|    @media (min-width: 768px) {
+66|      .main {
+67|        padding: 120px 40px;
+68|      }
+69|    }
+70|
+71|    .header {
+72|      margin-bottom: 64px;
+73|      animation: fadeInUp 0.6s ease-out;
+74|    }
+75|
+76|    @media (min-width: 768px) {
+77|      .header {
+78|        margin-bottom: 80px;
+79|      }
+80|    }
+81|
+82|    .title {
+83|      font-size: 32px;
+84|      font-weight: 600;
+85|      letter-spacing: -0.03em;
+86|      line-height: 1.1;
+87|      margin-bottom: 12px;
+88|    }
+89|
+90|    @media (min-width: 768px) {
+91|      .title {
+92|        font-size: 42px;
+93|      }
+94|    }
+95|
+96|    .subtitle {
+97|      font-size: 14px;
+98|      font-weight: 400;
+99|      color: var(--text-muted);
+100|      letter-spacing: -0.01em;
+101|    }
+102|
+103|    .links-grid {
+104|      display: grid;
+105|      grid-template-columns: 1fr;
+106|      gap: 20px;
+107|    }
+108|
+109|    @media (min-width: 540px) {
+110|      .links-grid {
+111|        grid-template-columns: repeat(2, 1fr);
+112|        gap: 24px;
+113|      }
+114|    }
+115|
+116|    .link-card {
+117|      display: flex;
+118|      flex-direction: column;
+119|      text-decoration: none;
+120|      color: inherit;
+121|      border-radius: 16px;
+122|      overflow: hidden;
+123|      background: var(--card-bg);
+124|      border: 1px solid var(--border);
+125|      transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+126|      animation: fadeInUp 0.6s ease-out backwards;
+127|    }
+128|
+129|    .link-card:nth-child(1) { animation-delay: 0.1s; }
+130|    .link-card:nth-child(2) { animation-delay: 0.2s; }
+131|
+132|    .link-card:hover {
+133|      border-color: rgba(255, 255, 255, 0.15);
+134|      background: rgba(255, 255, 255, 0.04);
+135|      transform: translateY(-4px);
+136|    }
+137|
+138|    .link-image-wrapper {
+139|      position: relative;
+140|      aspect-ratio: 16 / 10;
+141|      overflow: hidden;
+142|      background: rgba(255, 255, 255, 0.02);
+143|    }
+144|
+145|    .link-image {
+146|      width: 100%;
+147|      height: 100%;
+148|      object-fit: cover;
+149|      filter: saturate(0.9);
+150|      transition: filter 0.4s ease, transform 0.4s ease;
+151|    }
+152|
+153|    .link-card:hover .link-image {
+154|      filter: saturate(1);
+155|      transform: scale(1.05);
+156|    }
+157|
+158|    .link-overlay {
+159|      position: absolute;
+160|      inset: 0;
+161|      background: rgba(0, 0, 0, 0.3);
+162|      display: flex;
+163|      align-items: center;
+164|      justify-content: center;
+165|      opacity: 0;
+166|      transition: opacity 0.3s ease;
+167|    }
+168|
+169|    .link-card:hover .link-overlay {
+170|      opacity: 1;
+171|    }
+172|
+173|    .link-arrow-circle {
+174|      width: 48px;
+175|      height: 48px;
+176|      border-radius: 50%;
+177|      background: rgba(255, 255, 255, 0.95);
+178|      color: #080808;
+179|      display: flex;
+180|      align-items: center;
+181|      justify-content: center;
+182|      transform: scale(0.8);
+183|      transition: transform 0.3s ease;
+184|    }
+185|
+186|    .link-card:hover .link-arrow-circle {
+187|      transform: scale(1);
+188|    }
+189|
+190|    .link-title-wrapper {
+191|      padding: 16px 18px;
+192|      display: flex;
+193|      align-items: center;
+194|      justify-content: space-between;
+195|      gap: 8px;
+196|    }
+197|
+198|    .link-title {
+199|      font-size: 15px;
+200|      font-weight: 500;
+201|      letter-spacing: -0.01em;
+202|    }
+203|
+204|    .link-indicator {
+205|      color: var(--text-muted);
+206|      display: flex;
+207|      align-items: center;
+208|      transition: transform 0.2s ease, opacity 0.2s ease;
+209|      opacity: 0.4;
+210|    }
+211|
+212|    .link-card:hover .link-indicator {
+213|      transform: translateX(4px);
+214|      opacity: 1;
+215|    }
+216|
+217|    .footer {
+218|      margin-top: auto;
+219|      padding-top: 80px;
+220|      text-align: center;
+221|      animation: fadeIn 0.6s ease-out 0.8s backwards;
+222|    }
+223|
+224|    .made-in {
+225|      font-size: 13px;
+226|      font-weight: 400;
+227|      color: rgba(255, 255, 255, 0.18);
+228|      letter-spacing: 0.02em;
+229|    }
+230|
+231|    @keyframes fadeInUp {
+232|      from {
+233|        opacity: 0;
+234|        transform: translateY(20px);
+235|      }
+236|      to {
+237|        opacity: 1;
+238|        transform: translateY(0);
+239|      }
+240|    }
+241|
+242|    @keyframes fadeIn {
+243|      from { opacity: 0; }
+244|      to { opacity: 1; }
+245|    }
+246|
+247|    /* Arrow SVG */
+248|    .arrow-icon {
+249|      width: 20px;
+250|      height: 20px;
+251|    }
+252|
+253|    .arrow-icon-small {
+254|      width: 14px;
+255|      height: 14px;
+256|    }
+257|  </style>
+258|</head>
+259|<body>
+260|  <div class="app">
+261|    <div class="bg-gradient"></div>
+262|    
+263|    <main class="main">
+264|      <header class="header">
+265|        <h1 class="title">just a little fun</h1>
+266|        <p class="subtitle">things i've made</p>
+267|      </header>
+268|
+269|      <div class="links-grid">
+270|        <a href="https://citation-vmod.onrender.com" target="_blank" rel="noopener noreferrer" class="link-card">
+271|          <div class="link-image-wrapper">
+272|            <img src="https://images.unsplash.com/photo-1649962843028-54905316eb21?w=600&q=80" alt="CiteFast" class="link-image">
+273|            <div class="link-overlay">
+274|              <div class="link-arrow-circle">
+275|                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+276|                  <line x1="7" y1="17" x2="17" y2="7"></line>
+277|                  <polyline points="7 7 17 7 17 17"></polyline>
+278|                </svg>
+279|              </div>
+280|            </div>
+281|          </div>
+282|          <div class="link-title-wrapper">
+283|            <span class="link-title">CiteFast</span>
+284|            <span class="link-indicator">
+285|              <svg class="arrow-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+286|                <line x1="7" y1="17" x2="17" y2="7"></line>
+287|                <polyline points="7 7 17 7 17 17"></polyline>
+288|              </svg>
+289|            </span>
+290|          </div>
+291|        </a>
+292|
+293|        <a href="https://sweepz1.github.io/hopecore" target="_blank" rel="noopener noreferrer" class="link-card">
+294|          <div class="link-image-wrapper">
+295|            <img src="https://images.unsplash.com/photo-1698156731209-b2fae65b5d24?w=600&q=80" alt="Rays of Hope" class="link-image">
+296|            <div class="link-overlay">
+297|              <div class="link-arrow-circle">
+298|                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+299|                  <line x1="7" y1="17" x2="17" y2="7"></line>
+300|                  <polyline points="7 7 17 7 17 17"></polyline>
+301|                </svg>
+302|              </div>
+303|            </div>
+304|          </div>
+305|          <div class="link-title-wrapper">
+306|            <span class="link-title">Rays of Hope</span>
+307|            <span class="link-indicator">
+308|              <svg class="arrow-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+309|                <line x1="7" y1="17" x2="17" y2="7"></line>
+310|                <polyline points="7 7 17 7 17 17"></polyline>
+311|              </svg>
+312|            </span>
+313|          </div>
+314|        </a>
+315|      </div>
+316|
+317|      <footer class="footer">
+318|        <span class="made-in">Made in Canada</span>
+319|      </footer>
+320|    </main>
+321|  </div>
+322|</body>
+323|</html>
